@@ -8,9 +8,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 
+import { TodoComponent } from './todo/todo.component';
+import { TareasComponent } from './componentes/tareas/tareas.component';
+
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TodoComponent,
+    TareasComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,55 @@
+<div class="row">
+    
+    <h1 class="text-center">TODO</h1>
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2 mb-4" >
+      <input type="text" [(ngModel)]="tarea" (keyup.enter)="agregarTarea()" class="form-control form-control-lg text-center" placeholder="Ingrese tarea"/>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-lg-4">
+      <h4>To do</h4>
+
+      <div cdkDropList 
+      class="example-list" 
+      id="list-todo"
+      [cdkDropListData]="todo"
+      [cdkDropListConnectedTo]="['list-progress']"
+      (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let movie of todo" cdkDrag>{{movie}}</div>
+      </div>
+      
+    </div>
+
+    <div class="col-lg-4">
+      <h4>In progress</h4>
+
+      <div cdkDropList class="example-list" 
+      (cdkDropListDropped)="drop($event)" 
+      [cdkDropListData]="progress"
+      [cdkDropListConnectedTo]="['list-todo','list-done']"
+      id="list-progress">
+        <div class="example-box" *ngFor="let movie of progress" cdkDrag>{{movie}}</div>
+      </div>
+      
+    </div>
+
+    <div class="col-lg-4">
+      <h4>Done</h4>
+
+      <div cdkDropList class="example-list" 
+      [cdkDropListData]="done"
+      (cdkDropListDropped)="drop($event)" 
+      [cdkDropListConnectedTo]="['list-progress']"
+      id="list-done">
+        <div class="example-box" *ngFor="let movie of done" cdkDrag>{{movie}}</div>
+      </div>
+      
+    </div>
+
+  </div>

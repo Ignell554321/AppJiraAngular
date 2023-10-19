@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">JIRA APP</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,91 +7,50 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link active" aria-current="page" routerLink="tareas">Tablero</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+          <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Proyectos
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Historial</a></li>
+            <li><a class="dropdown-item" href="#">Estadisticas</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          <a class="nav-link" aria-current="page" routerLink="tareas">Backlog</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Mantenimiento
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Proyecto</a></li>
+            <li><a class="dropdown-item" href="#">Sprint</a></li>
+            <li><a class="dropdown-item" href="#">Responsable</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Usuario</a></li>
+            
+          </ul>
         </li>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-success" type="submit">Buscar</button>
       </form>
     </div>
   </div>
 </nav>
 
 
-<div class="container mt-5" style="border: solid 1px black;">
+<div class="container-fluid pb-2" >
   
-  <div class="row">
-    
-    <h1 class="text-center">TODO</h1>
-
-  </div>
-
-  <div class="row">
-    <div class="col-lg-8 offset-lg-2 mb-4" >
-      <input type="text" [(ngModel)]="tarea" (keyup.enter)="agregarTarea()" class="form-control form-control-lg text-center" placeholder="Ingrese tarea"/>
-    </div>
-  </div>
-
-  <div class="row">
-
-    <div class="col-lg-4">
-      <h4>To do</h4>
-
-      <div cdkDropList 
-      class="example-list" 
-      id="list-todo"
-      [cdkDropListData]="todo"
-      [cdkDropListConnectedTo]="['list-progress']"
-      (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let movie of todo" cdkDrag>{{movie}}</div>
-      </div>
-      
-    </div>
-
-    <div class="col-lg-4">
-      <h4>In progress</h4>
-
-      <div cdkDropList class="example-list" 
-      (cdkDropListDropped)="drop($event)" 
-      [cdkDropListData]="progress"
-      [cdkDropListConnectedTo]="['list-todo','list-done']"
-      id="list-progress">
-        <div class="example-box" *ngFor="let movie of progress" cdkDrag>{{movie}}</div>
-      </div>
-      
-    </div>
-
-    <div class="col-lg-4">
-      <h4>Done</h4>
-
-      <div cdkDropList class="example-list" 
-      [cdkDropListData]="done"
-      (cdkDropListDropped)="drop($event)" 
-      [cdkDropListConnectedTo]="['list-progress']"
-      id="list-done">
-        <div class="example-box" *ngFor="let movie of done" cdkDrag>{{movie}}</div>
-      </div>
-      
-    </div>
-
-  </div>
+  <!-- Begin Page Content -->
+  <router-outlet></router-outlet>
+  <!-- /.container-fluid -->
 
 </div>
+
