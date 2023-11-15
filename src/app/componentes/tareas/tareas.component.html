@@ -39,8 +39,9 @@
                     (cdkDropListDropped)="drop($event)">
     
                         <div draggable="true" *ngFor="let movie of todo" cdkDrag class="card-Body-Hover py-3 px-2 rounded-1 task"
-                            style="border-bottom: 1px #362F29 solid;"
-                            id="1">
+                            style="border-bottom: 1px #362F29 solid; cursor: pointer;"
+                            id="1"
+                            (dblclick)="open(content,movie)">
                             
                             <div class="my-1 fw-bold"> Tarea / Subtarea</div>
 
@@ -217,16 +218,94 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Tarea</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+            <div class="container">
+
+                <form>
+                    <div class="form-group">
+                        <label for="">Tarea</label>
+                        <div class="row">
+                            <div class="col-md-11">
+                                <select  class="form-select form-select-sm" aria-label="Default select example">
+                                    <option value="">Seleccione una tarea...</option>
+                                </select>
+                            </div>   
+                            <div class="col-md-1">
+                                <button class="btn btn-success btn-sm">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr/>
+                    <label>Sub-tarea</label>
+
+                    <div class="form-group mt-2">
+                        <label for="">Nombre</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Ingrese una subtarea">
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="">Descripcion</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="">Responsable</label>
+                        <select  class="form-select form-select-sm" aria-label="Default select example">
+                            <option value="">Seleccione un responsable...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="">Tiempo empleado (Planificado)</label>
+                        <input type="date" class="form-control form-control-sm" placeholder="Ingrese una subtarea">
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="">Tiempo empleado (Real)</label>
+                        <input type="date" class="form-control form-control-sm" placeholder="Ingrese una subtarea">
+                    </div>
+
+                </form>
+                
+            </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary">Guardar</button>
         </div>
       </div>
     </div>
   </div>
+
+
+  <ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form>
+			<div class="mb-3">
+				<label for="dateOfBirth">Date of birth</label>
+				<div class="input-group">
+					<input
+						id="dateOfBirth"
+						class="form-control"
+						placeholder="yyyy-mm-dd"
+						name="dp"
+						ngbDatepicker
+						#dp="ngbDatepicker"
+					/>
+					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+	</div>
+</ng-template>

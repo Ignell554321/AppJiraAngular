@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import Swal from 'sweetalert2'
+import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -10,12 +11,36 @@ import Swal from 'sweetalert2'
 })
 export class TareasComponent implements OnInit{
 
-  
+  constructor(private modalService: NgbModal) {}
+
+  closeResult = '';
 
   ngOnInit(): void {
-
-
   }
+
+  open(content:any, texto:string) {
+
+    console.log(texto);
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+			(result) => {
+				this.closeResult = `Closed with: ${result}`;
+			},
+			(reason) => {
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			},
+		);
+
+	}
+
+  private getDismissReason(reason: any): string {
+		if (reason === ModalDismissReasons.ESC) {
+			return 'by pressing ESC';
+		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+			return 'by clicking on a backdrop';
+		} else {
+			return `with: ${reason}`;
+		}
+	}
 
   todo:string[]=["Hacer comida", "Lavar los platos","Lavar la ropa"];
   progress:string[]=[];
