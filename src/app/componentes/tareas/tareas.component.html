@@ -3,7 +3,7 @@
         <div class="col-12" >
             <div class="d-flex justify-content-between">
                 
-                    <h4 class="fw-bold">TABLERO SPRINT  N° 1 - NOTIFICACIONES AUTOMATICAS </h4>   <button class="btn btn-primary">CERRAR SPRINT</button>
+                    <h4 class="fw-bold">TABLERO SPRINT  N° {{numeroSprint}} - {{nombreProyecto.toUpperCase()}} </h4>   <button class="btn btn-primary">CERRAR SPRINT</button>
                 
             </div>
 
@@ -224,17 +224,19 @@
         <div class="modal-body">
             <div class="container">
 
-                <form>
+                <form *ngIf="!nuevaTarea">
+
                     <div class="form-group">
                         <label for="">Tarea</label>
                         <div class="row">
                             <div class="col-md-11">
                                 <select  class="form-select form-select-sm" aria-label="Default select example">
                                     <option value="">Seleccione una tarea...</option>
+                                    <option *ngFor="let tarea of tareas" value="{{tarea.id}}">{{tarea.nombre}}</option>
                                 </select>
                             </div>   
                             <div class="col-md-1">
-                                <button class="btn btn-success btn-sm">+</button>
+                                <button class="btn btn-success btn-sm" (click)="guardarTarea()">+</button>
                             </div>
                         </div>
                     </div>
@@ -256,6 +258,7 @@
                         <label for="">Responsable</label>
                         <select  class="form-select form-select-sm" aria-label="Default select example">
                             <option value="">Seleccione un responsable...</option>
+                            <option *ngFor="let usuario of usuarios" value="{{usuario.id}}">{{usuario.responsable.nombres +' '+ usuario.responsable.apellidos}}</option>
                         </select>
                     </div>
 
@@ -263,17 +266,40 @@
                         <label for="">Apoyo</label> &nbsp; <input type="checkbox" class="btn mb-1" (click)="activarApoyo()"/>
                         <select  class="form-select form-select-sm" aria-label="Default select example" [disabled]="disabledSelectApoyo">
                             <option value="">Seleccione un apoyo...</option>
+                            <option *ngFor="let usuario of usuarios" value="{{usuario.id}}">{{usuario.responsable.nombres +' '+ usuario.responsable.apellidos}}</option>
+                           
                         </select>
                     </div>
 
                     <div class="form-group mt-2">
-                        <label for="">Tiempo empleado (Planificado)</label>
-                        <input type="date" class="form-control form-control-sm" placeholder="Ingrese una subtarea">
+                            <label for="tiempoEmpleadoPlanificado">Tiempo empleado (Planificado)</label>
+                            <div class="input-group">
+                                <input
+                                    id="tiempoEmpleadoPlanificado"
+                                    class="form-control form-control-sm"
+                                    placeholder="yyyy-mm-dd"
+                                    name="dp1"
+                                    ngbDatepicker
+                                    #dp1="ngbDatepicker"
+                                />
+                                <button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp1.toggle()" type="button"></button>
+                            </div>
+                        
                     </div>
 
                     <div class="form-group mt-2">
-                        <label for="">Tiempo empleado (Real)</label>
-                        <input type="date" class="form-control form-control-sm" placeholder="Ingrese una subtarea">
+                        <label for="tiempoEmpleadoReal">Tiempo empleado (Real)</label>
+                        <div class="input-group">
+                            <input
+                                id="tiempoEmpleadoReal"
+                                class="form-control form-control-sm"
+                                placeholder="yyyy-mm-dd"
+                                name="dp2"
+                                ngbDatepicker
+                                #dp2="ngbDatepicker"
+                            />
+                            <button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp2.toggle()" type="button"></button>
+                        </div>
                     </div>
 
                 </form>
@@ -282,7 +308,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-primary" (click)="guardarSubtarea()">Guardar</button>
         </div>
       </div>
     </div>

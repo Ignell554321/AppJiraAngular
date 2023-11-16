@@ -28,18 +28,22 @@
                                     <ul class="list-group">
 
                                       <!--"list-group-item list-group-item-action active"-->
+                                      <div *ngFor="let tarea of sprint.tareas"> 
+
                                         <button type="button" class="list-group-item list-group-item-action"
                                         (click)="collapse.toggle()"
                                         [attr.aria-expanded]="!isCollapsed"
                                         aria-controls="collapseExample"
-                                        *ngFor="let tarea of sprint.tareas"
+                                        
                                         >{{tarea.nombre}} <span class="float-end">{{tarea.estado.nombre}}</span>
-                                    
+                                
+                                        </button>
+
                                         <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
                                             <div class="card mt-2">
                                                 <div class="card card-body p-3">
 
-                                                    <button *ngFor="let subtarea of tarea.subtareas"  type="button"  class="list-group-item list-group-item-action active" style="background: #DEEBFF; color: black;" aria-current="true">
+                                                    <button *ngFor="let subtarea of tarea.subtareas"  type="button"  class="list-group-item list-group-item-action" style=" color: black;" aria-current="true">
                                                         {{subtarea.nombre}} <span class="float-end">{{subtarea.responsable.responsable.nombres +' '+ subtarea.responsable.responsable.apellidos}}</span>
                                                      </button>
                     
@@ -55,7 +59,8 @@
                                             </div>
                                         </div>
 
-                                        </button>
+                                      </div>
+                                        
 
                                     </ul>
 

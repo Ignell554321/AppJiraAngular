@@ -6,6 +6,10 @@ import { TareaService } from 'src/app/services/tarea.service';
 import { Subtarea } from 'src/app/interfaces/subtarea';
 import { SprintService } from 'src/app/services/sprint.service';
 import { Sprint } from 'src/app/interfaces/sprint';
+import { Tarea } from 'src/app/interfaces/tarea';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Usuario } from 'src/app/interfaces/usuario';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -15,21 +19,43 @@ import { Sprint } from 'src/app/interfaces/sprint';
 })
 export class TareasComponent implements OnInit{
 
-  constructor(private modalService: NgbModal, private sprintService:SprintService) {}
+  constructor(private modalService: NgbModal, private sprintService:SprintService, private usuarioService:UsuarioService,
+  private formBuilder: FormBuilder) {}
 
   public disabledSelectApoyo:boolean=true;
   closeResult = '';
   public sprint!:Sprint;
+  public tareas!:Tarea[];
+  public usuarios!:Usuario[];
+  public nuevaTarea:boolean=false;
+  public frmTarea!: FormGroup;
+  public frmSubTarea!: FormGroup;
+  public numeroSprint:Number=0;
+  public nombreProyecto:String='';
 
   ngOnInit(): void {
+
+    this.frmTarea=this.crearFormTarea();
+    this.frmSubTarea=this.crearFormSubTarea();
+
+    let sprint:any = this.frmTarea.get('sprint');
+     sprint.get('id').setValue(1);
+
+    // console.log(this.frmTarea.value);
+
+    this.usuarioService.listar.subscribe(res=>{
+      this.usuarios=res as Usuario[];
+    })
 
     this.sprintService.getSprintAct(1).subscribe(res=>{
       console.log(res);
       if(res!=null)
       {
         this.sprint=res as Sprint;
-        let tareas=this.sprint.tareas;
-        tareas.forEach(tarea=>{
+        this.numeroSprint=this.sprint.numero;
+        this.nombreProyecto=this.sprint.proyecto.nombre;
+        this.tareas=this.sprint.tareas;
+        this.tareas.forEach(tarea=>{
           tarea.subtareas.forEach(subtarea=>{
               subtarea.tarea=tarea;
               if(subtarea.estado.id===2){
@@ -41,11 +67,49 @@ export class TareasComponent implements OnInit{
               }else if(subtarea.estado.id===3){
                 this.done.push(subtarea);
               }
-              
+
           })
           
         })
       }
+
+    });
+
+      
+
+   
+  }
+
+  private crearFormSubTarea(){
+
+    return this.formBuilder.group({
+      id: 0,
+      nombre: ['',Validators.required],
+      descripcion: ['',Validators.required],
+      responsable: this.formBuilder.group({
+          id: [0,Validators.required]
+      }),
+      apoyo: this.formBuilder.group({
+        id: [0,Validators.required]
+      }),
+      tiempoEmpleadoReal: '',
+      tiempoEmpleadoPlanificado: ['',Validators.required],
+      prioridad: ['',Validators.required],
+      estado: {id: 2}, 
+      tarea:{id:0}
+  });
+
+  }
+  private crearFormTarea(){
+
+    return this.formBuilder.group({
+
+        id: 0,
+        nombre:['',Validators.required],
+        prioridad: ['',Validators.required],
+        estado: {id: 2},
+        subtareas: [],
+        sprint:this.formBuilder.group({id:['',Validators.required] })
 
     });
   }
@@ -125,6 +189,17 @@ export class TareasComponent implements OnInit{
       }
       
     }
+  }
+
+  guardarTarea(){
+
+    this.nuevaTarea=true;
+
+
+  }
+
+  guardarSubtarea(){
+
   }
 
 }
