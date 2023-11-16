@@ -1,5 +1,6 @@
 import { Estado } from "./estado";
 import { Proyecto } from "./proyecto";
+import { Tarea } from "./tarea";
 
 export interface Sprint {
 
@@ -10,4 +11,5 @@ export interface Sprint {
     fechaInicio:String,
     fechFin:String,
     estado:Estado
+    tareas:Tarea[]
 }

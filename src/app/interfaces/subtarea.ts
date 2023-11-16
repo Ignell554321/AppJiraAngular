@@ -10,9 +10,10 @@ export interface Subtarea {
     descripcion:String,
     responsable:Usuario,
     apoyo:Usuario,
-    sprint:Sprint,
     estado:Estado,
+    prioridad:String,
     tarea:Tarea
+    
 
 }
 

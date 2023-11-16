@@ -7,118 +7,57 @@
                 <h1>BACKLOG</h1>
             </div>
 
-            <div class="row">
+            <div class="row" *ngFor="let sprint of sprints">
 
                 <div class="container">
 
                     <div class="card  mb-3" style="background: #F8F8F8;">
                         <div class="card-header fs-6 ">
-                          <span class="fw-bold">Tareas backlog</span> 4 creadas  <span class="float-end"><button class="btn btn-success">CERRAR SPRINT</button></span>
+                          <span class="fw-bold">Tareas backlog</span> {{sprint.tareas.length}} creadas  
+                          <span class="float-end">
+                                <button *ngIf="sprint.estado.id===1" class="btn btn-success">CERRAR SPRINT</button>
+                                <button *ngIf="sprint.estado.id===2" class="btn btn-primary">EMPEZAR SPRINT</button>
+                                <button *ngIf="sprint.estado.id!==1 && sprint.estado.id!==2" class="btn" style="background: #E2E4E9;">CREAR SPRINT</button>
+                          </span>
                         </div>
                         <div class="card-body">
 
-                            <div class="row" >
+                            <div class="row"  >
                                 <div class="col-12" >
 
                                     <ul class="list-group">
 
-                                        <button type="button" class="list-group-item list-group-item-action active" style="background: #DEEBFF; color: black;" aria-current="true">
-                                             TAREA 1 SELECCIONADA <span class="float-end">Miguel guevara</span>
-                                          </button>
-                                        <button type="button" class="list-group-item list-group-item-action">TAREA 2 <span class="float-end">Miguel guevara</span></button>
-                                        <button type="button" class="list-group-item list-group-item-action">TAREA 3 <span class="float-end">Miguel guevara</span></button>
-                                        <button type="button" class="list-group-item list-group-item-action">TAREA 4 <span class="float-end">Miguel guevara</span></button>
-                                      </ul>
+                                      <!--"list-group-item list-group-item-action active"-->
+                                        <button type="button" class="list-group-item list-group-item-action"
+                                        (click)="collapse.toggle()"
+                                        [attr.aria-expanded]="!isCollapsed"
+                                        aria-controls="collapseExample"
+                                        *ngFor="let tarea of sprint.tareas"
+                                        >{{tarea.nombre}} <span class="float-end">{{tarea.estado.nombre}}</span>
+                                    
+                                        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                                            <div class="card mt-2">
+                                                <div class="card card-body p-3">
 
-                                </div>
+                                                    <button *ngFor="let subtarea of tarea.subtareas"  type="button"  class="list-group-item list-group-item-action active" style="background: #DEEBFF; color: black;" aria-current="true">
+                                                        {{subtarea.nombre}} <span class="float-end">{{subtarea.responsable.responsable.nombres +' '+ subtarea.responsable.responsable.apellidos}}</span>
+                                                     </button>
+                    
+                                                     <div class="row pt-2">
 
-                            </div>
-
-                            <div class="row pt-2">
-                                <div class="col-12">
-                                    <button class="btn "><i class="bi bi-plus-lg"></i> Crear tarea</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                <div class="container">
-
-                    <div class="card  mb-3" style="background: #F8F8F8;">
-                        <div class="card-header fs-6 ">
-                          <span class="fw-bold">Tareas backlog</span> 4 creadas  <span class="float-end"><button class="btn btn-primary">EMPEZAR SPRINT</button></span>
-                        </div>
-                        <div class="card-body">
-
-                            <div class="row" >
-                                <div class="col-12" >
-
-                                    <ul class="list-group">
-
-                                        <button type="button" class="list-group-item list-group-item-action active" style="background: #DEEBFF; color: black;" aria-current="true">
-                                             TAREA 1 SELECCIONADA <span class="float-end">Miguel guevara</span>
-                                          </button>
-                                        <button type="button" class="list-group-item list-group-item-action" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">TAREA 2 <span class="float-end">Miguel guevara</span></button>
-                                        <div class="row">
-                                            <div class="col-12">
-                                              <div class="collapse multi-collapse" id="multiCollapseExample1">
-
-                                                    <div class="card card-body p-3">
-
-                                                        <button type="button" class="list-group-item list-group-item-action active" style="background: #DEEBFF; color: black;" aria-current="true">
-                                                            SUBTAREA 1 SELECCIONADA <span class="float-end">Miguel guevara</span>
-                                                         </button>
-                                                         <button type="button" class="list-group-item list-group-item-action" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">SUBTAREA 2 <span class="float-end">Miguel guevara</span></button>
-
-                                                         <div class="row pt-2">
-
-                                                            <div class="col-12">
-                                                                <button class="btn" style="background: #F1F1F1;"><i class="bi bi-plus-lg"></i> Crear subtarea</button>
-                                                            </div>
-
+                                                        <div class="col-12">
+                                                            <button class="btn btn-sm" style="background: #F1F1F1;"><i class="bi bi-plus-lg"></i> Crear subtarea</button>
                                                         </div>
 
                                                     </div>
 
-                                               </div>
-                                              
+                                                </div>
                                             </div>
                                         </div>
-                                        <button type="button" class="list-group-item list-group-item-action" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">TAREA 3 <span class="float-end">Miguel guevara</span></button>
-                                        <div class="row">
-                                            <div class="col-12">
-                                              <div class="collapse multi-collapse" id="multiCollapseExample2">
 
-                                                    <div class="card card-body p-3">
+                                        </button>
 
-                                                        <button type="button" class="list-group-item list-group-item-action active" style="background: #DEEBFF; color: black;" aria-current="true">
-                                                            SUBTAREA 1 SELECCIONADA <span class="float-end">Miguel guevara</span>
-                                                         </button>
-                                                         <button type="button" class="list-group-item list-group-item-action" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">SUBTAREA 2 <span class="float-end">Miguel guevara</span></button>
-
-                                                         <div class="row pt-2">
-
-                                                            <div class="col-12">
-                                                                <button class="btn" style="background: #F1F1F1;"><i class="bi bi-plus-lg"></i> Crear subtarea</button>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-                                                    
-                                               </div>
-                                              
-                                            </div>
-                                        </div>
-                                        <button type="button" class="list-group-item list-group-item-action">TAREA 4 <span class="float-end">Miguel guevara</span></button>
-                                      </ul>
+                                    </ul>
 
                                 </div>
 

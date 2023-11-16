@@ -38,26 +38,26 @@
                     [cdkDropListConnectedTo]="['list-progress','list-review']"
                     (cdkDropListDropped)="drop($event)">
     
-                        <div draggable="true" *ngFor="let movie of todo" cdkDrag class="card-Body-Hover py-3 px-2 rounded-1 task"
+                        <div draggable="true" *ngFor="let subtarea of todo" cdkDrag class="card-Body-Hover py-3 px-2 rounded-1 task"
                             style="border-bottom: 1px #362F29 solid; cursor: pointer;"
                             id="1"
-                            (dblclick)="open(content,movie)">
+                            (dblclick)="open(content,subtarea)">
                             
-                            <div class="my-1 fw-bold"> Tarea / Subtarea</div>
+                            <div class="my-1 fw-bold"> {{subtarea.tarea.nombre}} / {{subtarea.nombre}}</div>
 
                             <div class="row">
                                 <div class="col">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                    {{subtarea.descripcion}}
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-3">
-                                    <span class="badge text-bg-warning">Alta</span>
+                                    <span class="badge text-bg-danger">{{subtarea.prioridad}}</span>
                                 </div>
                                 <div class="col-9 text-end">
                                     <p class="text-muted space-font m-0">
-                                        Miguel Guevara</p>
+                                        {{subtarea.responsable.responsable.nombres +' '+subtarea.responsable.responsable.apellidos}}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -86,25 +86,25 @@
                     [cdkDropListConnectedTo]="['list-todo','list-done','list-review']"
                     (cdkDropListDropped)="drop($event)"><!---->
     
-                        <div draggable="true" *ngFor="let movie of progress" cdkDrag class="card-Body-Hover py-3 px-2 rounded-1 task"
+                        <div draggable="true" *ngFor="let subtarea of progress" cdkDrag class="card-Body-Hover py-3 px-2 rounded-1 task"
                             style="border-bottom: 1px #362F29 solid;"
                             id="1">
                             
-                            <div class="my-1 fw-bold"> Tarea / Subtarea</div>
+                            <div class="my-1 fw-bold"> {{subtarea.tarea.nombre}} / {{subtarea.nombre}}</div>
 
                             <div class="row">
                                 <div class="col">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                    {{subtarea.descripcion}}
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-3">
-                                    <span class="badge text-bg-warning">Alta</span>
+                                    <span class="badge text-bg-danger">{{subtarea.prioridad}}</span>
                                 </div>
                                 <div class="col-9 text-end">
                                     <p class="text-muted space-font m-0">
-                                        Miguel Guevara</p>
+                                        {{subtarea.responsable.responsable.nombres +' '+subtarea.responsable.responsable.apellidos}}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -133,25 +133,25 @@
                     [cdkDropListConnectedTo]="['list-todo','list-done','list-progress']"
                     (cdkDropListDropped)="drop($event)"><!---->
     
-                        <div draggable="true" *ngFor="let movie of review" cdkDrag class="card-Body-Hover py-3 px-2 rounded-1 task"
+                        <div draggable="true" *ngFor="let subtarea of review" cdkDrag class="card-Body-Hover py-3 px-2 rounded-1 task"
                             style="border-bottom: 1px #362F29 solid;"
                             id="1">
                             
-                            <div class="my-1 fw-bold"> Tarea / Subtarea</div>
+                            <div class="my-1 fw-bold"> {{subtarea.tarea.nombre}} / {{subtarea.nombre}}</div>
 
                             <div class="row">
                                 <div class="col">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                    {{subtarea.descripcion}}
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-3">
-                                    <span class="badge text-bg-warning">Alta</span>
+                                    <span class="badge text-bg-danger">{{subtarea.prioridad}}</span>
                                 </div>
                                 <div class="col-9 text-end">
                                     <p class="text-muted space-font m-0">
-                                        Miguel Guevara</p>
+                                        {{subtarea.responsable.responsable.nombres +' '+subtarea.responsable.responsable.apellidos}}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -178,26 +178,26 @@
                     [cdkDropListConnectedTo]="['list-progress','list-review']"
                     (cdkDropListDropped)="drop($event)"><!---->
     
-                        <div draggable="true" *ngFor="let movie of done" cdkDrag class="card-Body-Hover py-3 px-2 rounded-1 task"
+                        <div draggable="true" *ngFor="let subtarea of done" cdkDrag class="card-Body-Hover py-3 px-2 rounded-1 task"
                             style="border-bottom: 1px #362F29 solid; opacity: 50%;"
                             id="1"
                             [cdkDragDisabled]="true">
                             
-                            <div class="my-1 fw-bold"> Tarea / Subtarea</div>
+                            <div class="my-1 fw-bold"> {{subtarea.tarea.nombre}} / {{subtarea.nombre}}</div>
 
                             <div class="row">
                                 <div class="col">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                    {{subtarea.descripcion}}
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-3">
-                                    <span class="badge text-bg-warning">Alta</span>
+                                    <span class="badge text-bg-danger">{{subtarea.prioridad}}</span>
                                 </div>
                                 <div class="col-9 text-end">
                                     <p class="text-muted space-font m-0">
-                                        Miguel Guevara</p>
+                                        {{subtarea.responsable.responsable.nombres +' '+subtarea.responsable.responsable.apellidos}}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -256,6 +256,13 @@
                         <label for="">Responsable</label>
                         <select  class="form-select form-select-sm" aria-label="Default select example">
                             <option value="">Seleccione un responsable...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="">Apoyo</label> &nbsp; <input type="checkbox" class="btn mb-1" (click)="activarApoyo()"/>
+                        <select  class="form-select form-select-sm" aria-label="Default select example" [disabled]="disabledSelectApoyo">
+                            <option value="">Seleccione un apoyo...</option>
                         </select>
                     </div>
 

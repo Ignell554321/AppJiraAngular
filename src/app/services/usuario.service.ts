@@ -66,18 +66,8 @@ export class UsuarioService {
     );
   }
 
-  delete(id: number): Observable<Usuario> {
-    return this.httpClient.delete<Usuario>(`${environment.apiEndPoint}usuario/eliminar/${id}`, this.httpOptions ).pipe(
-      catchError(e => {
-
-        console.error(e.error.mensaje);
-       /* if (this.isNoAutorizado(e)) {
-          return throwError(e);
-        }
-        swal(e.error.mensaje, e.error.error, 'error');*/
-        return throwError(e);
-      })
-    );
+  delete(id: number): Observable<string> {
+    return this.httpClient.get<string>(`${environment.apiEndPoint}usuario/eliminar/${id}`, this.httpOptions );
   }
 
 

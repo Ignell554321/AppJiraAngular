@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import Swal from 'sweetalert2'
 import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TareaService } from 'src/app/services/tarea.service';
+import { Subtarea } from 'src/app/interfaces/subtarea';
+import { SprintService } from 'src/app/services/sprint.service';
+import { Sprint } from 'src/app/interfaces/sprint';
 
 
 @Component({
@@ -11,16 +15,49 @@ import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstra
 })
 export class TareasComponent implements OnInit{
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private sprintService:SprintService) {}
 
+  public disabledSelectApoyo:boolean=true;
   closeResult = '';
+  public sprint!:Sprint;
 
   ngOnInit(): void {
+
+    this.sprintService.getSprintAct(1).subscribe(res=>{
+      console.log(res);
+      if(res!=null)
+      {
+        this.sprint=res as Sprint;
+        let tareas=this.sprint.tareas;
+        tareas.forEach(tarea=>{
+          tarea.subtareas.forEach(subtarea=>{
+              subtarea.tarea=tarea;
+              if(subtarea.estado.id===2){
+                this.todo.push(subtarea);
+              }else if(subtarea.estado.id===1){
+                this.progress.push(subtarea);
+              }else if(subtarea.estado.id===6){
+                this.review.push(subtarea);
+              }else if(subtarea.estado.id===3){
+                this.done.push(subtarea);
+              }
+              
+          })
+          
+        })
+      }
+
+    });
   }
 
-  open(content:any, texto:string) {
+  activarApoyo(){
 
-    console.log(texto);
+    this.disabledSelectApoyo=!this.disabledSelectApoyo;
+  }
+
+  open(content:any, subtarea:Subtarea) {
+
+    console.log(subtarea);
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
 			(result) => {
 				this.closeResult = `Closed with: ${result}`;
@@ -42,12 +79,12 @@ export class TareasComponent implements OnInit{
 		}
 	}
 
-  todo:string[]=["Hacer comida", "Lavar los platos","Lavar la ropa"];
-  progress:string[]=[];
-  review:string[]=[];
-  done:string[]=[];
+  todo:Subtarea[]=[];
+  progress:Subtarea[]=[];
+  review:Subtarea[]=[];
+  done:Subtarea[]=[];
 
-  drop(event: CdkDragDrop<string[], any, any>) {
+  drop(event: CdkDragDrop<Subtarea[], any, any>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

@@ -5,6 +5,7 @@ import {UsuarioService} from '../../services/usuario.service'
 import { Usuario } from 'src/app/interfaces/usuario';
 import { tap } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-usuario',
@@ -42,7 +43,7 @@ export class UsuarioComponent implements OnInit{
          cargo:['',Validators.required], 
          correo:['',Validators.required]
         }),
-        estado:{id: 7 }
+        estado:{id: 2 }
 
     });
   }
@@ -105,6 +106,36 @@ export class UsuarioComponent implements OnInit{
       }*/
 
     }
+
+    
+
+  }
+
+  eliminar(id:number){
+
+    
+    
+    Swal.fire({
+      title: '¿Deseas eliminar este usuario?',
+      text: "No podras volver a visualizarlo",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.usuarioService.delete(id).subscribe(res=>{
+          console.log(res);
+          this.listar();
+        });
+
+      }
+    })
+
+
+    
 
   }
 
